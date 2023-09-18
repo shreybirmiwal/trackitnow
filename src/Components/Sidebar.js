@@ -1,6 +1,5 @@
 import React from "react";
 
-import Admin from "../Pages/Admin";
 import Inventory from "../Pages/Inventory";
 import Locker from "../Pages/Locker";
 
@@ -37,11 +36,6 @@ export default function Sidebar({setTab, tab}) {
                                     </div>
                                 </li>
 
-                                <li className="rounded-sm">
-                                    <div className="flex items-center justify-center p-2 space-x-3 rounded-md hover:font-bold"  onClick={setTab2}>
-                                        <p className="text-2xl">Admin</p>
-                                    </div>
-                                </li>
 
                             </ul>
                         </div>
@@ -50,7 +44,6 @@ export default function Sidebar({setTab, tab}) {
 
                 {tab === 0 && <Locker/>}
                 {tab === 1 && <Inventory/>}
-                {tab === 2 && <Admin />}
 
             </div>
         </div>
