@@ -4,7 +4,8 @@ import { db } from '../firebase';
 
 function Locker() {
     const [inventoryData, setInventoryData] = useState([]);
-    const [checkoutQuantities, setCheckoutQuantities] = useState({}); // State to store checkout quantities for each item
+    const [checkoutQuantities, setCheckoutQuantities] = useState({});
+    const [studentGrade, setStudentGrade] = useState(''); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -25,16 +26,19 @@ function Locker() {
         fetchData();
     }, []);
 
-    // Function to handle quantity selection for an item
     const handleQuantityChange = (itemName, quantity) => {
         setCheckoutQuantities({ ...checkoutQuantities, [itemName]: quantity });
     };
 
-    // Function to handle submission
+    const handleStudentGradeChange = (e) => {
+        const grade = e.target.value;
+        setStudentGrade(grade);
+    };
+
     const handleSubmit = () => {
-        // Here, you can access the selected checkout quantities from the checkoutQuantities state
-        // and update your database accordingly.
+        //check if grade entered!
         console.log("Checkout quantities:", checkoutQuantities);
+        console.log("Student's Grade:", studentGrade);
     };
 
     return (
@@ -59,9 +63,19 @@ function Locker() {
                 ))}
             </ul>
 
+            <div className="flex flex-row w-full sm:w-56 items-center justify-center bg-gray-200 hover:bg-gray-400 rounded-md shadow-md cursor-pointer">
+                <input
+                    type="text"
+                    placeholder="Student's Grade"
+                    value={studentGrade}
+                    onChange={handleStudentGradeChange}
+                />
+            </div>
+
             <div
-                className="flex flex-row w-full sm:w-56 items-center justify-center bg-gray-200 hover:bg-gray-400 rounded-md shadow-md cursor-pointer"
+                className={`flex flex-row w-full sm:w-56 items-center justify-center bg-gray-200 hover:bg-gray-400 rounded-md shadow-md cursor-pointer ${isSubmitDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleSubmit}
+                disabled={isSubmitDisabled}
             >
                 <h1 className='p-5 text-2xl font-bold text-center'> Submit </h1>
             </div>
