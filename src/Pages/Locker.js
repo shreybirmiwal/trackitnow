@@ -45,27 +45,7 @@ function Locker() {
             for (const itemName in checkoutQuantities) {
                 if (checkoutQuantities.hasOwnProperty(itemName)) {
                     const quantityToCheckout = checkoutQuantities[itemName];
-                    const itemDocRef = doc(db, 'inventory', itemName);
-    
-                    try {
-                        const itemDocSnapshot = await getDocs(itemDocRef);
-                        if (itemDocSnapshot.exists()) {
-                            const itemData = itemDocSnapshot.data();
-                            const currentStock = itemData.Amount;
-    
-                            if (quantityToCheckout <= currentStock) {
-                                const newStock = currentStock - quantityToCheckout;
-                                // Update the database with the new stock amount
-                                await updateDoc(itemDocRef, { Amount: newStock });
-                            } else {
-                                console.log(`Not enough stock for item: ${itemName}`);
-                            }
-                        } else {
-                            console.log(`Item not found in database: ${itemName}`);
-                        }
-                    } catch (error) {
-                        console.error(`Error updating item: ${itemName}`, error);
-                    }
+                    console.log(itemName + " " + quantityToCheckout)
                 }
             }
         }
