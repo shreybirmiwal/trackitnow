@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { db } from '../firebase';
 
 function Locker() {
@@ -35,10 +35,40 @@ function Locker() {
         setStudentGrade(grade);
     };
 
-    const handleSubmit = () => {
-        //check if grade entered!
-        console.log("Checkout quantities:", checkoutQuantities);
-        console.log("Student's Grade:", studentGrade);
+    const handleSubmit = async () => {
+        // Check if grade entered
+        if (studentGrade !== '') {
+            console.log("Checkout quantities:", checkoutQuantities);
+            console.log("Student's Grade:", studentGrade);
+    
+            // Loop through checkout quantities and update the database
+            for (const itemName in checkoutQuantities) {
+                if (checkoutQuantities.hasOwnProperty(itemName)) {
+                    const quantityToCheckout = checkoutQuantities[itemName];
+                    const itemDocRef = doc(db, 'inventory', itemName);
+    
+                    try {
+                        const itemDocSnapshot = await getDocs(itemDocRef);
+                        if (itemDocSnapshot.exists()) {
+                            const itemData = itemDocSnapshot.data();
+                            const currentStock = itemData.Amount;
+    
+                            if (quantityToCheckout <= currentStock) {
+                                const newStock = currentStock - quantityToCheckout;
+                                // Update the database with the new stock amount
+                                await updateDoc(itemDocRef, { Amount: newStock });
+                            } else {
+                                console.log(`Not enough stock for item: ${itemName}`);
+                            }
+                        } else {
+                            console.log(`Item not found in database: ${itemName}`);
+                        }
+                    } catch (error) {
+                        console.error(`Error updating item: ${itemName}`, error);
+                    }
+                }
+            }
+        }
     };
 
     return (
@@ -73,9 +103,8 @@ function Locker() {
             </div>
 
             <div
-                className={`flex flex-row w-full sm:w-56 items-center justify-center bg-gray-200 hover:bg-gray-400 rounded-md shadow-md cursor-pointer ${isSubmitDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`flex flex-row w-full sm:w-56 items-center justify-center bg-gray-200 hover:bg-gray-400 rounded-md shadow-md cursor-pointer`}
                 onClick={handleSubmit}
-                disabled={isSubmitDisabled}
             >
                 <h1 className='p-5 text-2xl font-bold text-center'> Submit </h1>
             </div>
