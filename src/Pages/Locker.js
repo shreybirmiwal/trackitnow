@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
 import { db } from '../firebase';
 
 function Locker() {
@@ -46,6 +46,12 @@ function Locker() {
                 if (checkoutQuantities.hasOwnProperty(itemName)) {
                     const quantityToCheckout = checkoutQuantities[itemName];
                     console.log(itemName + " " + quantityToCheckout)
+
+                    const docRef = doc(db, "inventory", itemName);
+                    await updateDoc(docRef, {
+                        Amount: increment(-1*quantityToCheckout)
+                    });
+
                 }
             }
         }
