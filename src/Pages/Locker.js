@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
 import { db } from '../firebase';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Locker() {
     const [inventoryData, setInventoryData] = useState([]);
@@ -54,6 +56,35 @@ function Locker() {
 
                 }
             }
+
+            toast.success('Success!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
+
+
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+
+        } else {
+            
+            toast.warn('Enter a valid grade level', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            });
         }
     };
 
@@ -94,6 +125,10 @@ function Locker() {
             >
                 <h1 className='p-5 text-2xl font-bold text-center'> Submit </h1>
             </div>
+
+
+            <ToastContainer/>
+
         </div>
     )
 }
