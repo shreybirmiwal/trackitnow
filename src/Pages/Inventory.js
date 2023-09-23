@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { collection, addDoc } from "firebase/firestore"; // Import necessary Firestore functions
+import { collection, addDoc, setDoc, doc } from "firebase/firestore"; // Import necessary Firestore functions
 import { db } from '../firebase';
 
 function Inventory() {
@@ -60,10 +60,9 @@ function Inventory() {
 
     if (newItemName && newStock) {
       try {
-        // Add a new document to the Firestore collection
-        const docRef = await addDoc(collection(db, "inventory"), {
-          [newItemName]: newStock,
-        });
+        // Set a new document with the specified name and data
+        const docRef = doc(db, "inventory", newItemName);
+        await setDoc(docRef, { Amount: newStock });
 
         toast.success('Item added successfully!', {
           position: "top-right",
