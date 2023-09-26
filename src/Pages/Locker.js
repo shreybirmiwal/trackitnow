@@ -17,7 +17,7 @@ function Locker() {
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           const itemName = doc.id;
-          const stockAmount = data.Amount;
+          const stockAmount = Number(data.Amount);
           inventoryArray.push({ itemName, stockAmount });
         });
         setInventoryData(inventoryArray);
