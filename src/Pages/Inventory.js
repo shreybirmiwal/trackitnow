@@ -12,6 +12,7 @@ function Inventory() {
   const [newStock, setNewStock] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
   const [inventoryData, setInventoryData] = useState([]);
+  const [itemStocks, setItemStocks] = useState({});
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -96,6 +97,11 @@ function Inventory() {
 
         setNewItemName('');
         setNewStock('');
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+        
       } catch (error) {
         console.error('Error adding item to the database: ', error);
         toast.error('Error adding item to the database.', {
@@ -123,11 +129,12 @@ function Inventory() {
     }
   };
 
-  const handleUpdateStock = async () => {
-    if (selectedItem && newStock) {
+  const handleUpdateStock = async (itemName) => {
+    const stockToUpdate = itemStocks[itemName];
+    if (stockToUpdate !== undefined) {
       try {
-        const docRef = doc(db, "inventory", selectedItem);
-        await setDoc(docRef, { Amount: Number(newStock) }, { merge: true });
+        const docRef = doc(db, "inventory", itemName);
+        await setDoc(docRef, { Amount: Number(stockToUpdate) }, { merge: true });
 
         toast.success('Stock updated successfully!', {
           position: "top-right",
@@ -140,8 +147,17 @@ function Inventory() {
           theme: "dark",
         });
 
+
+
         setSelectedItem('');
-        setNewStock('');
+        setItemStocks({ ...itemStocks, [itemName]: '' });
+
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+
+
       } catch (error) {
         console.error('Error updating stock: ', error);
         toast.error('Error updating stock.', {
@@ -156,7 +172,7 @@ function Inventory() {
         });
       }
     } else {
-      toast.error('Please select an item and enter the new stock amount.', {
+      toast.error('Please enter the new stock amount.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -169,40 +185,33 @@ function Inventory() {
     }
   };
 
-  const handleDeleteItem = async () => {
-    if (selectedItem) {
-      try {
-        const docRef = doc(db, "inventory", selectedItem);
-        await deleteDoc(docRef);
+  const handleDeleteItem = async (itemName) => {
+    try {
+      const docRef = doc(db, "inventory", itemName);
+      await deleteDoc(docRef);
 
-        toast.success('Item deleted successfully!', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
+      toast.success('Item deleted successfully!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
 
-        setSelectedItem('');
-        setNewStock('');
-      } catch (error) {
-        console.error('Error deleting item: ', error);
-        toast.error('Error deleting item.', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-      }
-    } else {
-      toast.error('Please select an item to delete.', {
+      setSelectedItem('');
+      setItemStocks({ ...itemStocks, [itemName]: '' });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
+
+    } catch (error) {
+      console.error('Error deleting item: ', error);
+      toast.error('Error deleting item.', {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -218,46 +227,12 @@ function Inventory() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
-      <h1 className="text-3xl mb-4">Add new item to database</h1>
 
       {admin ? (
         <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2">Admin Panel</h2>
-          <div className="flex items-center space-x-2 mb-2">
-            <select
-              className="p-2 border border-gray-300 rounded"
-              value={selectedItem}
-              onChange={(e) => setSelectedItem(e.target.value)}
-            >
-              <option value="">Select an item</option>
-              {inventoryData.map((item) => (
-                <option key={item.itemName} value={item.itemName}>
-                  {item.itemName}
-                </option>
-              ))}
-            </select>
-            <input
-              className="p-2 border border-gray-300 rounded"
-              type="number"
-              placeholder="New Stock"
-              value={newStock}
-              onChange={(e) => setNewStock(e.target.value)}
-            />
-            <button
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-              onClick={handleUpdateStock}
-            >
-              Update Stock
-            </button>
-            <button
-              className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-              onClick={handleDeleteItem}
-            >
-              Delete Item
-            </button>
-          </div>
+          <h2 className="text-xl font-semibold mb-2 mt-10">Add item to database</h2>
 
-          <div className="flex items-center space-x-2 mb-2">
+          <div className="flex items-center space-x-2">
             <input
               className="p-2 border border-gray-300 rounded"
               type="text"
@@ -278,6 +253,72 @@ function Inventory() {
             >
               Add Item
             </button>
+          </div>
+
+          <div className="mb-4 mt-10">
+            <h2 className="text-xl font-semibold mb-2">All Items</h2>
+            <div className="max-h-80 overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead>
+                  <tr>
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Item Name
+                    </th>
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Stock
+                    </th>
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Update Stock
+                    </th>
+                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Delete Item
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {inventoryData.map((item) => (
+                    <tr key={item.itemName}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.itemName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {item.stockAmount}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center space-x-2">
+                          <input
+                            className="p-2 border border-gray-300 rounded"
+                            type="number"
+                            placeholder="New Stock"
+                            value={itemStocks[item.itemName] || ''}
+                            onChange={(e) =>
+                              setItemStocks({
+                                ...itemStocks,
+                                [item.itemName]: e.target.value,
+                              })
+                            }
+                          />
+                          <button
+                            className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
+                            onClick={() => handleUpdateStock(item.itemName)}
+                          >
+                            Update
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                          onClick={() => handleDeleteItem(item.itemName)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       ) : (
@@ -300,36 +341,6 @@ function Inventory() {
           </button>
         </div>
       )}
-
-      <div className="mb-4">
-        <h2 className="text-xl font-semibold mb-2">All Items</h2>
-        <div className="max-h-80 overflow-y-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Item Name
-                </th>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Stock
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {inventoryData.map((item) => (
-                <tr key={item.itemName}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.itemName}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {item.stockAmount}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
 
       <ToastContainer />
     </div>
