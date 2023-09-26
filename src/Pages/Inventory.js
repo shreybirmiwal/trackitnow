@@ -217,7 +217,8 @@ function Inventory() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-4">Inventory Management</h1>
+      <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
+      <h1 className="text-3xl mb-4">Add new item to database</h1>
 
       {admin ? (
         <div className="mb-4">
@@ -256,8 +257,7 @@ function Inventory() {
             </button>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-semibold mb-2">Add new item to database</h1>
+          <div className="flex items-center space-x-2 mb-2">
             <input
               className="p-2 border border-gray-300 rounded"
               type="text"
@@ -278,18 +278,6 @@ function Inventory() {
             >
               Add Item
             </button>
-          </div>
-
-          {/* Display all items and current stock */}
-          <div className="mt-4">
-            <h2 className="text-xl font-semibold mb-2">All Items</h2>
-            <ul className="list-disc pl-4">
-              {inventoryData.map((item) => (
-                <li key={item.itemName}>
-                  {item.itemName}: {item.stockAmount}
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
       ) : (
@@ -312,6 +300,36 @@ function Inventory() {
           </button>
         </div>
       )}
+
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold mb-2">All Items</h2>
+        <div className="max-h-80 overflow-y-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Item Name
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Stock
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {inventoryData.map((item) => (
+                <tr key={item.itemName}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.itemName}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {item.stockAmount}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <ToastContainer />
     </div>
