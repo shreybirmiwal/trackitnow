@@ -83,7 +83,7 @@ function Inventory() {
       try {
         // Set a new document with the specified name and data
         const docRef = doc(db, "inventory", newItemName);
-        await setDoc(docRef, { Amount: newStock });
+        await setDoc(docRef, { Amount: Number(newStock) });
 
         toast.success('Item added successfully!', {
           position: "top-right",
@@ -131,7 +131,7 @@ function Inventory() {
       try {
         // Update the stock amount of the selected item
         const docRef = doc(db, "inventory", selectedItem);
-        await setDoc(docRef, { Amount: newStock }, { merge: true });
+        await setDoc(docRef, { Amount: Number(newStock) }, { merge: true });
 
         toast.success('Stock updated successfully!', {
           position: "top-right",
@@ -245,6 +245,22 @@ function Inventory() {
         />
         <button onClick={handleUpdateStock}>Update Stock</button>
         <button onClick={handleDeleteItem}>Delete Item</button>
+
+
+        <input
+          type="text"
+          placeholder="Item Name"
+          value={newItemName}
+          onChange={(e) => setNewItemName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Current Stock"
+          value={newStock}
+          onChange={(e) => setNewStock(e.target.value)}
+        />
+        <button onClick={handleAddNewItem}>Add Item</button>
+
         <ToastContainer />
       </div>
     );
