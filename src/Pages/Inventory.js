@@ -18,6 +18,22 @@ function Inventory() {
     setPassword(event.target.value);
   };
 
+  const fetchData2 = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "inventory"));
+      var inventoryArray = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const itemName = doc.id;
+        const stockAmount = data.Amount;
+        inventoryArray.push({ itemName, stockAmount });
+      });
+      setInventoryData(inventoryArray);
+    } catch (error) {
+      console.error('Error fetching inventory data: ', error);
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -97,10 +113,9 @@ function Inventory() {
 
         setNewItemName('');
         setNewStock('');
+        
+        fetchData2();
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
         
       } catch (error) {
         console.error('Error adding item to the database: ', error);
@@ -152,11 +167,7 @@ function Inventory() {
         setSelectedItem('');
         setItemStocks({ ...itemStocks, [itemName]: '' });
 
-
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-
+        fetchData2()
 
       } catch (error) {
         console.error('Error updating stock: ', error);
@@ -203,11 +214,8 @@ function Inventory() {
 
       setSelectedItem('');
       setItemStocks({ ...itemStocks, [itemName]: '' });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-
+      
+      fetchData2();
 
     } catch (error) {
       console.error('Error deleting item: ', error);
