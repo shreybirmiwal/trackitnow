@@ -21,11 +21,15 @@ function Locker() {
           inventoryArray.push({ itemName, stockAmount });
         });
         setInventoryData(inventoryArray);
+        console.log(inventoryData)
+
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
       }
     };
     fetchData();
+    console.log(inventoryData)
+
   }, []);
 
   const handleQuantityChange = (itemName, quantity) => {
