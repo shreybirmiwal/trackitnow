@@ -5,7 +5,7 @@ import { collection, addDoc, setDoc, doc, deleteDoc, getDocs } from "firebase/fi
 import { db } from '../firebase';
 
 function Inventory() {
-  const correctPassword = 'PASS';
+  const correctPassword = 'KidsHelpingKids';
   const [admin, setAdmin] = useState(false);
   const [password, setPassword] = useState('');
   const [newItemName, setNewItemName] = useState('');
