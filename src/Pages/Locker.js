@@ -149,7 +149,6 @@ function Locker() {
           </button>
         </div>
       </div>
-      <h2> 38 checkouts this month! </h2>
 
       <ToastContainer />
     </div>
