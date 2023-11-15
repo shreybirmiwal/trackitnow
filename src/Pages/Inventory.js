@@ -5,7 +5,9 @@ import { collection, addDoc, setDoc, doc, deleteDoc, getDocs } from "firebase/fi
 import { db } from '../firebase';
 
 function Inventory() {
-  const correctPassword = 'KidsHelpingKids';
+  const SCHOOL_NAME = process.env.REACT_APP_SCHOOL_NAME
+  const correctPassword = process.env.REACT_APP_PASSWORD
+
   const [admin, setAdmin] = useState(false);
   const [password, setPassword] = useState('');
   const [newItemName, setNewItemName] = useState('');
@@ -13,6 +15,7 @@ function Inventory() {
   const [selectedItem, setSelectedItem] = useState('');
   const [inventoryData, setInventoryData] = useState([]);
   const [itemStocks, setItemStocks] = useState({});
+
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
@@ -234,7 +237,7 @@ function Inventory() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
+      <h1 className="text-3xl font-semibold mb-2">{SCHOOL_NAME} Inventory Management</h1>
 
       {admin ? (
         <div className="mb-4">
