@@ -2,6 +2,7 @@ import React from "react";
 
 import Inventory from "../Pages/Inventory";
 import Locker from "../Pages/Locker";
+import QR from "../Pages/QR";
 
 export default function Sidebar({setTab, tab}) {
 
@@ -36,6 +37,11 @@ export default function Sidebar({setTab, tab}) {
                                     </div>
                                 </li>
 
+                                <li className="rounded-sm">
+                                    <div className="flex items-center justify-center p-2 space-x-3 rounded-md hover:font-bold"  onClick={setTab2}>
+                                        <p className="text-2xl">QR</p>
+                                    </div>
+                                </li>
 
                             </ul>
                         </div>
@@ -44,6 +50,7 @@ export default function Sidebar({setTab, tab}) {
 
                 {tab === 0 && <Locker/>}
                 {tab === 1 && <Inventory/>}
+                {tab === 2 && <QR/>}
 
             </div>
         </div>
