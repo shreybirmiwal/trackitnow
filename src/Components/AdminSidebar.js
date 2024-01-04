@@ -1,8 +1,8 @@
 import React from "react";
-import Locker from "../Pages/Locker";
-import QR from "../Pages/QR";
+import Inventory from "../Pages/Inventory";
+import Analytics from "../Pages/Analytics";
 
-export default function Sidebar({ setTab, tab }) {
+export default function AdminSidebar({ setTab, tab }) {
   const setTab0 = () => {
     setTab(0);
   };
@@ -24,7 +24,7 @@ export default function Sidebar({ setTab, tab }) {
                     className="flex p-2 justify-center space-x-3 rounded-md hover:font-bold"
                     onClick={setTab0}
                   >
-                    <p className="text-2xl text-center">The Locker</p>
+                    <p className="text-2xl text-center">Inventory</p>
                   </div>
                 </li>
 
@@ -35,7 +35,7 @@ export default function Sidebar({ setTab, tab }) {
                     className="flex items-center justify-center p-2 space-x-3 rounded-md hover:font-bold"
                     onClick={setTab1}
                   >
-                    <p className="text-2xl">QR</p>
+                    <p className="text-2xl">Analytics</p>
                   </div>
                 </li>
               </ul>
@@ -45,8 +45,8 @@ export default function Sidebar({ setTab, tab }) {
 
         {/* Page Content */}
         <div className="flex-1">
-          {tab === 0 && <Locker />}
-          {tab === 1 && <QR />}
+          {tab === 0 && <Inventory />}
+          {tab === 1 && <Analytics />}
         </div>
       </div>
     </div>
