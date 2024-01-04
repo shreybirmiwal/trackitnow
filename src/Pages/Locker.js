@@ -62,6 +62,9 @@ function Locker() {
           await updateDoc(docRef, {
             Amount: increment(-1 * quantityToCheckout)
           });
+          await updateDoc(docRef, {
+            total_checkouts: increment(quantityToCheckout)
+          });
 
         }
       }

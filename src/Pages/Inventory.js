@@ -101,7 +101,7 @@ function Inventory() {
     if (newItemName && newStock) {
       try {
         const docRef = doc(db, "inventory", newItemName);
-        await setDoc(docRef, { Amount: Number(newStock) });
+        await setDoc(docRef, { Amount: Number(newStock),  total_checkouts: 0, days: 1});
 
         toast.success('Item added successfully!', {
           position: "top-right",

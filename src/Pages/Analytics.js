@@ -7,7 +7,6 @@ import Chart from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 
 function Analytics() {
-
   const [inventoryData, setInventoryData] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,8 @@ function Analytics() {
     fetchData();
   }, []);
 
-  const current_inventory_labels = ["January", "February", "March", "April", "May", "June"];
+  // Use dynamic data from the database
+  const current_inventory_labels = inventoryData.map((item) => item.itemName);
   const current_inventory_data = {
     labels: current_inventory_labels,
     datasets: [
@@ -37,16 +37,15 @@ function Analytics() {
         label: "Current Inventory Status",
         backgroundColor: "rgb(30,144,255)",
         borderColor: "rgb(30,144,255)",
-        data: [0, 10, 5, 2, 20, 30, 45],
+        data: inventoryData.map((item) => item.stockAmount),
       },
     ],
   };
 
   return (
     <div className="container mx-auto p-4">
-        <h1 className="text-3xl font-semibold mb-2">Analytics</h1>
-        <Bar data={current_inventory_data} />
-
+      <h1 className="text-3xl font-semibold mb-2">Analytics</h1>
+      <Bar data={current_inventory_data} />
       <ToastContainer />
     </div>
   );
