@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Sidebar from './Components/Sidebar';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom" 
 import AdminSidebar from './Components/AdminSidebar';
+import LandingPage from './Pages/LandingPage';
 
 function App() {
     const [tab, setTab] = useState(0);
@@ -13,12 +14,13 @@ function App() {
         <Router>
         <Routes>
           
-          <Route exact path="/" element={<Sidebar setTab={setTab} tab={tab} />}/>
-          <Route path="/Admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab}/>}/>
+          <Route exact path="/" element={<LandingPage/>}/>
 
           <Route path="/whs" element={<Sidebar setTab={setTab} tab={tab} school={"Westwood"}/>}/>
           <Route path="/whs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Westwood"}/>}/>
 
+          <Route path="/ghs" element={<Sidebar setTab={setTab} tab={tab} school={"Georgetown"}/>}/>
+          <Route path="/ghs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Georgetown"}/>}/>
 
 
         </Routes>

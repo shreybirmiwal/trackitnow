@@ -100,11 +100,11 @@ function Analytics({school}) {
           <tbody>
             {inventoryData.map((item) => (
               <tr key={item.itemName} style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? 'red' : 'inherit' }}>
-  <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
-  <td className="px-6 py-4 whitespace-nowrap">{item.stockAmount}</td>
-  <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
-  <td className="px-6 py-4 whitespace-nowrap">{item.expectedDaysUntilDepletion.toFixed(2)}</td>
-</tr>
+              <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{item.stockAmount}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{item.expectedDaysUntilDepletion.toFixed(2)}</td>
+            </tr>
             ))}
           </tbody>
         </table>

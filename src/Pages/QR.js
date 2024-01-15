@@ -6,7 +6,14 @@ function QR({school}) {
   const [fore, setFore] = useState('#000000');
   const [size, setSize] = useState(256);
 
-  const QR_CODE = process.env.REACT_APP_QR_CODE
+  var QR_CODE = ""
+  if(school === 'Westwood'){
+    QR_CODE = process.env.REACT_APP_QR_CODE_WHS
+  } else if(school == 'Georgtown'){
+    QR_CODE = process.env.REACT_APP_QR_CODE_GHS
+  } else {
+    QR_CODE = ''
+  }
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 w-full">
