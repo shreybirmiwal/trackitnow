@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import QRCode from 'react-qr-code';
 
-function QR() {
+function QR({school}) {
   const [back, setBack] = useState('#FFFFFF');
   const [fore, setFore] = useState('#000000');
   const [size, setSize] = useState(256);
 
-  const SCHOOL_NAME = process.env.REACT_APP_SCHOOL_NAME
   const QR_CODE = process.env.REACT_APP_QR_CODE
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 w-full">
     <div className="w-full max-w-xl p-4">
     <div className="flex flex-col items-center justify-center h-scree">
-        <h1 className='mb-10 text-xl font-bold'> {SCHOOL_NAME} Locker </h1>
+        <h1 className='mb-10 text-xl font-bold'> {school} Locker </h1>
       <QRCode
         value={QR_CODE}
         bgColor={back}

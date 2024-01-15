@@ -6,13 +6,14 @@ import { db } from '../firebase';
 import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 
-function Analytics() {
+function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "inventory"));
+        var school_tag = school +"-inventory"
+        const querySnapshot = await getDocs(collection(db, school_tag));
         var inventoryArray = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();

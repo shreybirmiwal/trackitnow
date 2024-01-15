@@ -5,19 +5,18 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-function Locker() {
+function Locker({school}) {
 
   const [inventoryData, setInventoryData] = useState([]);
   const [checkoutQuantities, setCheckoutQuantities] = useState({});
   const [studentGrade, setStudentGrade] = useState('');
 
-  const SCHOOL_NAME = process.env.REACT_APP_SCHOOL_NAME
-
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "inventory"));
+        var school_tag = school +"-inventory"
+        const querySnapshot = await getDocs(collection(db, school_tag));
         var inventoryArray = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
@@ -101,7 +100,7 @@ function Locker() {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 w-full">
       <div className="w-full max-w-xl p-4">
-        <h1 className="text-2xl font-bold mb-4">{SCHOOL_NAME} Locker</h1>
+        <h1 className="text-2xl font-bold mb-4">{school} Locker</h1>
         <p className="text-gray-600 mb-4">Select and update the quantities you have checked out from the Locker so we can keep track of our stockpile.</p>
         <div className="overflow-x-auto">
           <div style={{ maxHeight: '400px', overflowY: 'auto' }}>

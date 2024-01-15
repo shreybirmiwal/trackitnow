@@ -16,6 +16,11 @@ function App() {
           <Route exact path="/" element={<Sidebar setTab={setTab} tab={tab} />}/>
           <Route path="/Admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab}/>}/>
 
+          <Route path="/whs" element={<Sidebar setTab={setTab} tab={tab} school={"Westwood"}/>}/>
+          <Route path="/whs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Westwood"}/>}/>
+
+
+
         </Routes>
       </Router>
 
