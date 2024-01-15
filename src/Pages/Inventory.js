@@ -5,7 +5,13 @@ import { collection, addDoc, setDoc, doc, deleteDoc, getDocs } from "firebase/fi
 import { db } from '../firebase';
 
 function Inventory({school}) {
-  const correctPassword = process.env.REACT_APP_PASSWORD_
+  
+  var correctPassword = ""
+  if(school === "whs"){
+    correctPassword = process.env.REACT_APP_PASSWORD_WHS
+  } else {
+    correctPassword = process.env.REACT_APP_PASSWORD
+  }
 
   const [admin, setAdmin] = useState(false);
   const [password, setPassword] = useState('');
