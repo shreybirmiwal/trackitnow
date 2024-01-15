@@ -2,7 +2,7 @@ import React from "react";
 import Inventory from "../Pages/Inventory";
 import Analytics from "../Pages/Analytics";
 
-export default function AdminSidebar({ setTab, tab }) {
+export default function AdminSidebar({ setTab, tab, school }) {
   const setTab0 = () => {
     setTab(0);
   };
@@ -45,8 +45,8 @@ export default function AdminSidebar({ setTab, tab }) {
 
         {/* Page Content */}
         <div className="flex-1">
-          {tab === 0 && <Inventory />}
-          {tab === 1 && <Analytics />}
+          {tab === 0 && <Inventory school={school}/>}
+          {tab === 1 && <Analytics school={school}/>}
         </div>
       </div>
     </div>

@@ -4,9 +4,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { collection, addDoc, setDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
 
-function Inventory() {
-  const SCHOOL_NAME = process.env.REACT_APP_SCHOOL_NAME
-  const correctPassword = process.env.REACT_APP_PASSWORD
+function Inventory({school}) {
+  
+  var correctPassword = ""
+  if(school === "Westwood"){
+    correctPassword = process.env.REACT_APP_PASSWORD_WHS
+  } else if(school === "Georgtown") {
+    correctPassword = process.env.REACT_APP_PASSWORD_GHS
+  } else {
+    correctPassword = ""
+  }
 
   const [admin, setAdmin] = useState(false);
   const [password, setPassword] = useState('');
@@ -17,13 +24,14 @@ function Inventory() {
   const [itemStocks, setItemStocks] = useState({});
 
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event) => { //not password change, like the password field getting updated
     setPassword(event.target.value);
   };
 
   const fetchData2 = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, "inventory"));
+      var school_tag = school +"-inventory"
+      const querySnapshot = await getDocs(collection(db, school_tag));
       var inventoryArray = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
@@ -40,7 +48,8 @@ function Inventory() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "inventory"));
+        var school_tag = school +"-inventory"
+        const querySnapshot = await getDocs(collection(db, school_tag));
         var inventoryArray = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
@@ -100,7 +109,8 @@ function Inventory() {
 
     if (newItemName && newStock) {
       try {
-        const docRef = doc(db, "inventory", newItemName);
+        var school_tag = school +"-inventory"
+        const docRef = doc(db, school_tag, newItemName);
         await setDoc(docRef, { Amount: Number(newStock),  total_checkouts: 0, days: 1});
 
         toast.success('Item added successfully!', {
@@ -151,7 +161,8 @@ function Inventory() {
     const stockToUpdate = itemStocks[itemName];
     if (stockToUpdate !== undefined) {
       try {
-        const docRef = doc(db, "inventory", itemName);
+        var school_tag = school +"-inventory"
+        const docRef = doc(db, school_tag, itemName);
         await setDoc(docRef, { Amount: Number(stockToUpdate) }, { merge: true });
 
         toast.success('Stock updated successfully!', {
@@ -201,7 +212,8 @@ function Inventory() {
 
   const handleDeleteItem = async (itemName) => {
     try {
-      const docRef = doc(db, "inventory", itemName);
+      var school_tag = school +"-inventory"
+      const docRef = doc(db,school_tag, itemName);
       await deleteDoc(docRef);
 
       toast.success('Item deleted successfully!', {
@@ -237,7 +249,7 @@ function Inventory() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-2">{SCHOOL_NAME} Inventory Management</h1>
+      <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
 
       {admin ? (
         <div className="mb-4">

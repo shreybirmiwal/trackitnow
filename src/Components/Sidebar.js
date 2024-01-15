@@ -2,7 +2,7 @@ import React from "react";
 import Locker from "../Pages/Locker";
 import QR from "../Pages/QR";
 
-export default function Sidebar({ setTab, tab }) {
+export default function Sidebar({ setTab, tab, school }) {
   const setTab0 = () => {
     setTab(0);
   };
@@ -45,8 +45,8 @@ export default function Sidebar({ setTab, tab }) {
 
         {/* Page Content */}
         <div className="flex-1">
-          {tab === 0 && <Locker />}
-          {tab === 1 && <QR />}
+          {tab === 0 && <Locker school={school}/>}
+          {tab === 1 && <QR school={school}/>}
         </div>
       </div>
     </div>
