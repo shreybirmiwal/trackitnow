@@ -9,7 +9,7 @@ function Inventory({school}) {
   var correctPassword = ""
   if(school === "Westwood"){
     correctPassword = process.env.REACT_APP_PASSWORD_WHS
-  } else if(school === "Georgtown") {
+  } else if(school === "Georgetown") {
     correctPassword = process.env.REACT_APP_PASSWORD_GHS
   } else {
     correctPassword = ""

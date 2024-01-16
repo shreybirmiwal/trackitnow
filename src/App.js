@@ -17,10 +17,10 @@ function App() {
           <Route exact path="/" element={<LandingPage/>}/>
 
           <Route path="/whs" element={<Sidebar setTab={setTab} tab={tab} school={"Westwood"}/>}/>
-          <Route path="/whs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Westwood"}/>}/>
+          <Route path="/whs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Westwood"} short_school = {"whs"}/>}/>
 
           <Route path="/ghs" element={<Sidebar setTab={setTab} tab={tab} school={"Georgetown"}/>}/>
-          <Route path="/ghs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Georgetown"}/>}/>
+          <Route path="/ghs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Georgetown"} short_school = {"ghs"}/>}/>
 
 
         </Routes>

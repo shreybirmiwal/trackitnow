@@ -1,6 +1,7 @@
 import React from "react";
 import Inventory from "../Pages/Inventory";
 import Analytics from "../Pages/Analytics";
+import { BrowserRouter as Router, Link, Route, Switch } from 'react-router-dom';
 
 export default function AdminSidebar({ setTab, tab, school }) {
   const setTab0 = () => {
@@ -10,6 +11,13 @@ export default function AdminSidebar({ setTab, tab, school }) {
     setTab(1);
   };
 
+  var linkToSchool =""
+  if(school === "Westwood"){
+    linkToSchool="/whs"
+  }  
+  if(school === "Georgetown"){
+    linkToSchool="/ghs"
+  }  
 
   return (
     <div className="h-screen">
@@ -38,6 +46,16 @@ export default function AdminSidebar({ setTab, tab, school }) {
                     <p className="text-2xl">Analytics</p>
                   </div>
                 </li>
+
+                <li className="rounded-sm absolute bottom-0" style={{ backgroundColor: '#ff6961' }}>
+                <Link to={linkToSchool}
+                                  className="flex items-center justify-center p-2 space-x-3 rounded-md hover:font-bold"
+                >
+                  <p className="text-2xl">Student View</p>
+                  </Link>
+              </li>
+
+
               </ul>
             </div>
           </div>

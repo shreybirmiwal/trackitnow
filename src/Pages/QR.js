@@ -9,7 +9,7 @@ function QR({school}) {
   var QR_CODE = ""
   if(school === 'Westwood'){
     QR_CODE = process.env.REACT_APP_QR_CODE_WHS
-  } else if(school == 'Georgtown'){
+  } else if(school == 'Georgetown'){
     QR_CODE = process.env.REACT_APP_QR_CODE_GHS
   } else {
     QR_CODE = ''
