@@ -87,10 +87,10 @@ function Analytics({school}) {
                 Item Name
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Stock
+                Current Stock
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Average Depletion Rate
+                Average Checkouts/Day
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Expected Days Until Depletion
@@ -99,7 +99,7 @@ function Analytics({school}) {
           </thead>
           <tbody>
             {inventoryData.map((item) => (
-              <tr key={item.itemName} style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? 'red' : 'inherit' }}>
+              <tr key={item.itemName} style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}>
               <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.stockAmount}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
