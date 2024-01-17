@@ -59,10 +59,24 @@ const PieChart = () => {
 
 
   return (
-    <div>
-      <h2>Distribution of Students and Checkouts</h2>
+
+    <div className='w-full flex mt-5'>
+      {/* Left Column */}
+      <div className='w-1/2 p-6'>
+        <h2 className='font-bold text-xl'>Distribution of Students by Grade and Checkouts</h2>
+        <h1 className='mt-2 text-lg'> Freshmen : {freshmen}% </h1>
+        <h1 className='mt-2 text-lg'> Sophomore : {sophomore}% </h1>
+        <h1 className='mt-2 text-lg'> Junior : {junior}% </h1>
+        <h1 className='mt-2 text-lg'>  Senior : {senior}% </h1>
+
+      </div>
+
+      {/* Right Column */}
+      <div className='w-1/2 p-6'>
       <Pie data={data} height={"30%"}/>
+      </div>
     </div>
+
   );
 };
 

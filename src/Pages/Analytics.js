@@ -7,8 +7,8 @@ import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
-import PieChart1 from '../Components/PieChart1';
 import PieChart from '../Components/PieChart';
+import ColoredLine from '../Components/ColoredLine';
 
 function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -122,21 +122,23 @@ function Analytics({school}) {
         </table>
 
 
+              <div className='mt-5'>
+                <ColoredLine  color={"black"}/>
 
+              </div>
 
 
       </div>
 
 
-      <ToastContainer />
 
       <div>
-        <div className='w-80'> 
-          <PieChart/>
-        </div>
+
+            <PieChart/>
+
       </div>
 
-      
+      <ToastContainer />
 
 
     </div>
