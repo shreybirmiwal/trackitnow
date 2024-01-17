@@ -73,11 +73,18 @@ function Locker({school}) {
           });
 
 
+          //total checkouts
           const data_doc = doc(db, 'data', 'data1');
           await updateDoc(data_doc, {
             total_checkouts: increment(quantityToCheckout)
           });
 
+          const doc2 = doc(db, 'data', 'checkouts_grade');
+          //update what grade chekcout for pie chart in analytics
+          await updateDoc(doc2, {
+            [studentGrade]: increment(quantityToCheckout),
+            total: increment(quantityToCheckout)
+          });
         }
       }
 

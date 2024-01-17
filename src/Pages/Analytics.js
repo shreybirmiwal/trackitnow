@@ -7,6 +7,7 @@ import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import PieChart from '../Components/PieChart';
 
 function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -89,7 +90,7 @@ function Analytics({school}) {
       </div>
 
       {/* Table with four columns */}
-      <div className="max-h-80 overflow-y-auto mt-4">
+      <div className="max-h-80  mt-4">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
@@ -118,6 +119,10 @@ function Analytics({school}) {
             ))}
           </tbody>
         </table>
+
+
+        <PieChart/>
+
       </div>
 
       <ToastContainer />
