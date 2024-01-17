@@ -85,13 +85,15 @@ function Analytics({school}) {
         
       </div>
       
-      <div className="h-max mb-10">
+      <div className="h-max mb-5">
 
         <Line data={chartData}  />
       </div>
 
+      <ColoredLine color={"black"}/>
+
       {/* Table with four columns */}
-      <div className="max-h-80  mt-4">
+      <div className="max-h-80  mt-5">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
