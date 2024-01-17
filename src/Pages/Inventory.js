@@ -287,13 +287,13 @@ function Inventory({school}) {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 h-screen">
 
             <div className="flex items-center justify-between mb-2">
 
       <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
 
-      <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 rounded-md hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
+      <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
             <p className="text-2xl">Student View</p>
         </Link>
         </div>
@@ -328,7 +328,7 @@ function Inventory({school}) {
 
           <div className="mb-4 mt-10">
             <h2 className="text-xl font-semibold mb-2">All Items</h2>
-            <div className="max-h-80 overflow-y-auto">
+            <div className="overflow-y-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
@@ -346,7 +346,7 @@ function Inventory({school}) {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className='overflow-y-scroll h-12'>
                   {inventoryData.map((item) => (
                     <tr key={item.itemName}>
                       <td className="px-6 py-4 whitespace-nowrap">

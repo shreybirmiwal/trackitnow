@@ -4,6 +4,7 @@ import Sidebar from './Components/Sidebar';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom" 
 import AdminSidebar from './Components/AdminSidebar';
 import LandingPage from './Pages/LandingPage';
+import { AdminNav } from './Components/AdminNav';
 
 function App() {
     const [tab, setTab] = useState(0);
@@ -14,7 +15,7 @@ function App() {
         <Router>
         <Routes>
           
-          <Route exact path="/" element={<LandingPage/>}/>
+          <Route exact path="/" element={<AdminNav/>}/>
 
           <Route path="/whs" element={<Sidebar setTab={setTab} tab={tab} school={"Westwood"}/>}/>
           <Route path="/whs/admin" element={<AdminSidebar setTab={AdminsetTab} tab={Admintab} school={"Westwood"} short_school = {"whs"}/>}/>
