@@ -39,43 +39,29 @@ function Analytics({school}) {
     labels: inventoryData.map((item) => item.itemName),
     datasets: [
       {
-        label: "Current Inventory Status",
-        backgroundColor: "rgb(30,144,255)",
-        borderColor: "rgb(30,144,255)",
-        data: inventoryData.map((item) => item.stockAmount),
-      },
-      {
         label: "Average Depletion Rate",
-        type: "line",
         borderColor: "rgb(255,0,0)",
         data: inventoryData.map((item) => item.checkouts_per_day),
         yAxisID: 'y-axis-2',
       },
+      {
+        label: "Current Inventory Status",
+        type: "bar",
+        backgroundColor: "rgb(30,144,255)",
+        borderColor: "rgb(30,144,255)",
+        data: inventoryData.map((item) => item.stockAmount),
+      },
+
     ],
   };
 
-  const chartOptions = {
-    scales: {
-      x: {
-        stacked: true,
-      },
-      y: {
-        beginAtZero: true,
-      },
-      y2: {
-        type: 'linear',
-        position: 'right',
-        beginAtZero: true,
-      },
-    },
-  };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-semibold mb-2">Analytics</h1>
       <div className="max-h-96">
 
-        <Bar data={chartData} options={chartOptions} />
+        <Line data={chartData}  />
       </div>
 
       {/* Table with four columns */}
