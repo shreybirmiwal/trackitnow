@@ -45,12 +45,19 @@ function Analytics({school}) {
           data_pulls: increment(inventoryArray.length)
         });
 
+
+        
+      inventoryArray.sort((a, b) => a.expectedDaysUntilDepletion - b.expectedDaysUntilDepletion);
+      setInventoryData(inventoryArray);
+
+
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
       }
     };
     fetchData();
   }, []);
+
 
   const chartData = {
     labels: inventoryData.map((item) => item.itemName),
