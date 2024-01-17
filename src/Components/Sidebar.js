@@ -21,7 +21,7 @@ export default function Sidebar({ setTab, tab, school }) {
 
   return (
     <div className="h-screen">
-      <div className="flex h-screen w-screen">
+      <div className="flex h-max w-screen">
         {/* Sidebar */}
         <div className="hidden md:flex flex-col p-5 bg-white shadow w-60">
           <div className="space-y-3">

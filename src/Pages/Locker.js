@@ -30,7 +30,7 @@ function Locker({school}) {
 
         const data_doc = doc(db, 'data', 'data1');
         await updateDoc(data_doc, {
-          data_pulls: increment(inventoryArray.length())
+          data_pulls: increment(inventoryArray.length)
         });
 
       } catch (error) {

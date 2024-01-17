@@ -32,7 +32,7 @@ function Analytics({school}) {
 
         const data_doc = doc(db, 'data', 'data1');
         await updateDoc(data_doc, {
-          data_pulls: increment(inventoryArray.length())
+          data_pulls: increment(inventoryArray.length)
         });
 
       } catch (error) {
@@ -65,7 +65,7 @@ function Analytics({school}) {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-semibold mb-2">Analytics</h1>
-      <div className="max-h-96">
+      <div className="h-max mb-10">
 
         <Line data={chartData}  />
       </div>
@@ -91,11 +91,11 @@ function Analytics({school}) {
           </thead>
           <tbody>
             {inventoryData.map((item) => (
-              <tr key={item.itemName} className='overflow-scroll' style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}>
-              <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.stockAmount}</td>
+              <tr key={item.itemName} className='overflow-scroll'>
+              <td className="px-6 py-4 whitespace-nowrap" > {item.itemName}</td>
+              <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.stockAmount == 0 ? '#ff6961' : 'inherit' }}>{item.stockAmount}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.expectedDaysUntilDepletion.toFixed(2)}</td>
+              <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}> {item.expectedDaysUntilDepletion.toFixed(2)}</td>
             </tr>
             ))}
           </tbody>
