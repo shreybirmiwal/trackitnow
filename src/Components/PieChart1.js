@@ -1,10 +1,11 @@
 
+
 import React, { useState, useEffect } from 'react';
-import { Pie } from 'react-chartjs-2';
 import { updateDoc, doc, increment, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { PieChart } from 'react-minimal-pie-chart';
 
-const PieChart = () => {
+const PieChart1 = () => {
 
   const [freshmen, setFreshmen] = useState(0);
   const [sophomore, setSophomore] = useState(0);
@@ -44,26 +45,21 @@ const PieChart = () => {
   }, []);
 
 
-  // Data for the pie chart
-  const data = {
-    labels: ['Freshmen', 'Sophomore', 'Junior', 'Senior'],
-    datasets: [
-      {
-        data: [freshmen, sophomore, junior, senior],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50'],
-      },
-    ],
-  };
-
 
 
   return (
     <div>
-      <h2>Distribution of Students and Checkouts</h2>
-      <Pie data={data} height={"30%"}/>
+<PieChart
+  data={[
+    { title: 'Freshmen', value: freshmen, color: '#0074cc' },
+    { title: 'Sophomore', value: sophomore, color: '#0052a5' },
+    { title: 'Junior', value: junior, color: '#00316e' },
+    { title: 'Senior', value: senior, color: '#001037' },
+
+  ]}
+/>
     </div>
   );
 };
 
-export default PieChart;
+export default PieChart1;

@@ -7,6 +7,7 @@ import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import PieChart1 from '../Components/PieChart1';
 import PieChart from '../Components/PieChart';
 
 function Analytics({school}) {
@@ -121,11 +122,23 @@ function Analytics({school}) {
         </table>
 
 
-        <PieChart/>
+
+
 
       </div>
 
+
       <ToastContainer />
+
+      <div>
+        <div className='w-80'> 
+          <PieChart/>
+        </div>
+      </div>
+
+      
+
+
     </div>
   );
 }
