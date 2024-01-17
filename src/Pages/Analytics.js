@@ -7,6 +7,8 @@ import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
+import PieChart from '../Components/PieChart';
+import ColoredLine from '../Components/ColoredLine';
 
 function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -43,12 +45,19 @@ function Analytics({school}) {
           data_pulls: increment(inventoryArray.length)
         });
 
+
+        
+      inventoryArray.sort((a, b) => a.expectedDaysUntilDepletion - b.expectedDaysUntilDepletion);
+      setInventoryData(inventoryArray);
+
+
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
       }
     };
     fetchData();
   }, []);
+
 
   const chartData = {
     labels: inventoryData.map((item) => item.itemName),
@@ -83,13 +92,15 @@ function Analytics({school}) {
         
       </div>
       
-      <div className="h-max mb-10">
+      <div className="h-max mb-5">
 
         <Line data={chartData}  />
       </div>
 
+      <ColoredLine color={"black"}/>
+
       {/* Table with four columns */}
-      <div className="max-h-80 overflow-y-auto mt-4">
+      <div className="max-h-80  mt-5">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
@@ -118,9 +129,27 @@ function Analytics({school}) {
             ))}
           </tbody>
         </table>
+
+
+              <div className='mt-5'>
+                <ColoredLine  color={"black"}/>
+
+              </div>
+
+
+      </div>
+
+
+
+      <div>
+
+            <PieChart/>
+
       </div>
 
       <ToastContainer />
+
+
     </div>
   );
 }
