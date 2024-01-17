@@ -3,6 +3,7 @@ import { collection, getDocs, doc, updateDoc, increment } from "firebase/firesto
 import { db } from '../firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { addDoc, setDoc, deleteDoc } from "firebase/firestore";
 
 
 function Locker({school}) {
@@ -27,8 +28,14 @@ function Locker({school}) {
         setInventoryData(inventoryArray);
         console.log(inventoryData)
 
+        const data_doc = doc(db, 'data', 'data1');
+        await updateDoc(data_doc, {
+          data_pulls: increment(inventoryArray.length())
+        });
+
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
+
       }
     };
     fetchData();
@@ -62,6 +69,12 @@ function Locker({school}) {
             Amount: increment(-1 * quantityToCheckout)
           });
           await updateDoc(docRef, {
+            total_checkouts: increment(quantityToCheckout)
+          });
+
+
+          const data_doc = doc(db, 'data', 'data1');
+          await updateDoc(data_doc, {
             total_checkouts: increment(quantityToCheckout)
           });
 

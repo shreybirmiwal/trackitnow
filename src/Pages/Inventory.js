@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { collection, addDoc, setDoc, doc, deleteDoc, getDocs } from "firebase/firestore";
+import { collection, addDoc, setDoc, updateDoc, increment, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
 
 function Inventory({school}) {
@@ -40,6 +40,12 @@ function Inventory({school}) {
         inventoryArray.push({ itemName, stockAmount });
       });
       setInventoryData(inventoryArray);
+
+      const data_doc = doc(db, 'data', 'data1');
+      await updateDoc(data_doc, {
+        data_pulls: increment(inventoryArray.length())
+      });
+
     } catch (error) {
       console.error('Error fetching inventory data: ', error);
     }
@@ -57,6 +63,12 @@ function Inventory({school}) {
           const stockAmount = data.Amount;
           inventoryArray.push({ itemName, stockAmount });
         });
+
+        const data_doc = doc(db, 'data', 'data1');
+        await updateDoc(data_doc, {
+          data_pulls: increment(inventoryArray.length())
+        });
+
         setInventoryData(inventoryArray);
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
@@ -112,6 +124,12 @@ function Inventory({school}) {
         var school_tag = school +"-inventory"
         const docRef = doc(db, school_tag, newItemName);
         await setDoc(docRef, { Amount: Number(newStock),  total_checkouts: 0, days: 1});
+
+
+        const data_doc = doc(db, 'data', 'data1');
+        await updateDoc(data_doc, {
+          new_item: increment(1)
+        });
 
         toast.success('Item added successfully!', {
           position: "top-right",
@@ -183,6 +201,11 @@ function Inventory({school}) {
 
         fetchData2()
 
+        const data_doc = doc(db, 'data', 'data1');
+        await updateDoc(data_doc, {
+          update_data: increment(1)
+        });
+
       } catch (error) {
         console.error('Error updating stock: ', error);
         toast.error('Error updating stock.', {
@@ -230,6 +253,12 @@ function Inventory({school}) {
       setSelectedItem('');
       setItemStocks({ ...itemStocks, [itemName]: '' });
       
+      const data_doc = doc(db, 'data', 'data1');
+      await updateDoc(data_doc, {
+        update_data: increment(1)
+      });
+
+
       fetchData2();
 
     } catch (error) {

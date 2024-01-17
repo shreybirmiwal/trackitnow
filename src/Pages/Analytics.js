@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc, increment } from "firebase/firestore";
 import { db } from '../firebase';
 import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
+import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 
 function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -28,6 +29,12 @@ function Analytics({school}) {
         // Sort inventory data based on the average depletion rate
         inventoryArray.sort((a, b) => b.checkouts_per_day - a.checkouts_per_day);
         setInventoryData(inventoryArray);
+
+        const data_doc = doc(db, 'data', 'data1');
+        await updateDoc(data_doc, {
+          data_pulls: increment(inventoryArray.length())
+        });
+
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
       }
@@ -42,7 +49,6 @@ function Analytics({school}) {
         label: "Average Depletion Rate",
         borderColor: "rgb(255,0,0)",
         data: inventoryData.map((item) => item.checkouts_per_day),
-        yAxisID: 'y-axis-2',
       },
       {
         label: "Current Inventory Status",
