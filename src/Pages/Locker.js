@@ -56,8 +56,8 @@ function Locker({school}) {
         if (checkoutQuantities.hasOwnProperty(itemName)) {
           const quantityToCheckout = checkoutQuantities[itemName];
           console.log(itemName + " " + quantityToCheckout)
-
-          const docRef = doc(db, "inventory", itemName);
+          var school_tag = school +"-inventory"
+          const docRef = doc(db, school_tag, itemName);
           await updateDoc(docRef, {
             Amount: increment(-1 * quantityToCheckout)
           });
