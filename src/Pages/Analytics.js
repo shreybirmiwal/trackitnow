@@ -6,9 +6,17 @@ import { db } from '../firebase';
 import { Bar, Line } from "react-chartjs-2";
 import "chart.js/auto";
 import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
+import { Link } from 'react-router-dom';
 
 function Analytics({school}) {
   const [inventoryData, setInventoryData] = useState([]);
+  
+  var linkTo = ''
+  if(school == "Westwood"){
+    linkTo = '/whs'
+  } else if (school == "Georgetown"){
+    linkTo = '/ghs'
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +72,17 @@ function Analytics({school}) {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-2">Analytics</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-3xl font-semibold">Analytics</h1>
+
+
+
+          <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 rounded-md hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
+            <p className="text-2xl">Student View</p>
+          </Link>
+        
+      </div>
+      
       <div className="h-max mb-10">
 
         <Line data={chartData}  />
@@ -91,7 +109,7 @@ function Analytics({school}) {
           </thead>
           <tbody>
             {inventoryData.map((item) => (
-              <tr key={item.itemName} className='overflow-scroll'>
+              <tr key={item.itemName} className=''>
               <td className="px-6 py-4 whitespace-nowrap" > {item.itemName}</td>
               <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.stockAmount == 0 ? '#ff6961' : 'inherit' }}>{item.stockAmount}</td>
               <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>

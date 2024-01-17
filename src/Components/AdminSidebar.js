@@ -47,14 +47,6 @@ export default function AdminSidebar({ setTab, tab, school }) {
                   </div>
                 </li>
 
-                <li className="rounded-sm absolute bottom-0" style={{ backgroundColor: '#ff6961' }}>
-                <Link to={linkToSchool}
-                                  className="flex items-center justify-center p-2 space-x-3 rounded-md hover:font-bold"
-                >
-                  <p className="text-2xl">Student View</p>
-                  </Link>
-              </li>
-
 
               </ul>
             </div>

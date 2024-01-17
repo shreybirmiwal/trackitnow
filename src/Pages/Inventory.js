@@ -3,9 +3,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { collection, addDoc, setDoc, updateDoc, increment, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
+import { Link } from 'react-router-dom';
 
 function Inventory({school}) {
   
+
+  var linkTo = ''
+  if(school == "Westwood"){
+    linkTo = '/whs'
+  } else if (school == "Georgetown"){
+    linkTo = '/ghs'
+  }
+
+
   var correctPassword = ""
   if(school === "Westwood"){
     correctPassword = process.env.REACT_APP_PASSWORD_WHS
@@ -278,7 +288,16 @@ function Inventory({school}) {
 
   return (
     <div className="container mx-auto p-4">
+
+            <div className="flex items-center justify-between mb-2">
+
       <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
+
+      <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 rounded-md hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
+            <p className="text-2xl">Student View</p>
+        </Link>
+        </div>
+
 
       {admin ? (
         <div className="mb-4">
