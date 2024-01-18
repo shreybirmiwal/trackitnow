@@ -4,10 +4,12 @@ function CheckoutCard({ Grade, Items, Time }) {
   // Convert Firebase timestamp to JavaScript Date object
   const timestampDate = Time ? Time.toDate() : null;
   // Format the date using toLocaleString
-  const formattedDate = timestampDate ? timestampDate.toLocaleString() : '';
+  const formattedDate = timestampDate
+    ? timestampDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })
+    : '';
 
   return (
-    <div className="grid grid-cols-6 gap-4 bg-cyan-500 p-4 mt-4 rounded-md shadow-md">
+    <div className="grid grid-cols-6 gap-4 bg-blue-400 p-4 mt-4 rounded-md shadow-md">
 
       <div className="col-span-1 flex items-start justify-start ml-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -19,8 +21,7 @@ function CheckoutCard({ Grade, Items, Time }) {
         {formattedDate}
       </div>
 
-      <div className="col-span-2 overflow-auto">
-        {/* Iterate over Items object and display each item and its amount */}
+      <div className="col-span-2 overflow-x-auto">
         {Object.entries(Items).map(([item, amount]) => (
           <p key={item} className="text-white">{`${item}: ${amount}`}</p>
         ))}
