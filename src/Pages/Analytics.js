@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import PieChart from '../Components/PieChart';
 import ColoredLine from '../Components/ColoredLine';
 import { AdminNav } from '../Components/AdminNav';
-import { AnalyticsTable } from '../Components/AnalyticsTable';
 
 function Analytics({school, short_school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -87,7 +86,7 @@ function Analytics({school, short_school}) {
 
       <div class="container mx-auto p-7">
 
-        <h1 className="text-3xl font-semibold mt-3">Inventory Management</h1>
+        <h1 className="text-3xl font-semibold mt-3">Analytics</h1>
 
         <div className='my-5'>
           <Line data={chartData}  />
@@ -96,10 +95,8 @@ function Analytics({school, short_school}) {
         <ColoredLine color={"black"}/>
 
 
-        <AnalyticsTable inventoryData={inventoryData}/>
-
         {/* Table with four columns */}
-        <div className=" mt-5 overflow-scroll">
+        <div className=" mt-5 h-[500px] overflow-scroll">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>
