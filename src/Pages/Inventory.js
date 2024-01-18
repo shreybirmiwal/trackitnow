@@ -4,8 +4,32 @@ import 'react-toastify/dist/ReactToastify.css';
 import { collection, addDoc, setDoc, updateDoc, increment, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
+import { AdminNav } from '../Components/AdminNav';
+import {
+  MagnifyingGlassIcon,
+  ChevronUpDownIcon,
+} from "@heroicons/react/24/outline";
+import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import {
+  Card,
+  CardHeader,
+  Input,
+  Typography,
+  Button,
+  CardBody,
+  Chip,
+  CardFooter,
+  Tabs,
+  TabsHeader,
+  Tab,
+  Avatar,
+  IconButton,
+  Tooltip,
+} from "@material-tailwind/react";
+ 
+const TABLE_HEAD = ["Item Name", "Current Stock", "Update", "Delete"];
 
-function Inventory({school}) {
+function Inventory({school, short_school}) {
   
 
   var linkTo = ''
@@ -33,6 +57,10 @@ function Inventory({school}) {
   const [inventoryData, setInventoryData] = useState([]);
   const [itemStocks, setItemStocks] = useState({});
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredInventoryData = inventoryData.filter(({ itemName }) =>
+    itemName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handlePasswordChange = (event) => { //not password change, like the password field getting updated
     setPassword(event.target.value);
@@ -287,133 +315,207 @@ function Inventory({school}) {
   };
 
   return (
-    <div className="container mx-auto p-4">
+      <div className='min-h-screen'>
+        <AdminNav school={school} short_school={short_school}/>
 
-            <div className="flex items-center justify-between mb-2">
+        <div class="container mx-auto p-7">
 
-      <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
+          <h1 className="text-3xl font-semibold mt-3">Inventory Management</h1>
+          {admin ? (
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold mb-2 mt-6">Add item to database</h2>
 
-      <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 rounded-md hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
-            <p className="text-2xl">Student View</p>
-        </Link>
-        </div>
+              <div className="flex items-center space-x-2 mb-10">
+                <input
+                  className="p-2 border border-gray-300 rounded"
+                  type="text"
+                  placeholder="Item Name"
+                  value={newItemName}
+                  onChange={(e) => setNewItemName(e.target.value)}
+                />
+                <input
+                  className="p-2 border border-gray-300 rounded"
+                  type="number"
+                  placeholder="Current Stock"
+                  value={newStock}
+                  onChange={(e) => setNewStock(e.target.value)}
+                />
+                <button
+                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  onClick={handleAddNewItem}
+                >
+                  Add Item
+                </button>
+              </div>
 
 
-      {admin ? (
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2 mt-10">Add item to database</h2>
 
-          <div className="flex items-center space-x-2">
-            <input
-              className="p-2 border border-gray-300 rounded"
-              type="text"
-              placeholder="Item Name"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-            />
-            <input
-              className="p-2 border border-gray-300 rounded"
-              type="number"
-              placeholder="Current Stock"
-              value={newStock}
-              onChange={(e) => setNewStock(e.target.value)}
-            />
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-              onClick={handleAddNewItem}
-            >
-              Add Item
-            </button>
-          </div>
 
-          <div className="mb-4 mt-10">
-            <h2 className="text-xl font-semibold mb-2">All Items</h2>
-            <div className="max-h-80 overflow-y-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Item Name
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Stock
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Update Stock
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Delete Item
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {inventoryData.map((item) => (
-                    <tr key={item.itemName}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.itemName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.stockAmount}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center space-x-2">
-                          <input
-                            className="p-2 border border-gray-300 rounded"
-                            type="number"
-                            placeholder="New Stock"
-                            value={itemStocks[item.itemName] || ''}
-                            onChange={(e) =>
-                              setItemStocks({
-                                ...itemStocks,
-                                [item.itemName]: e.target.value,
-                              })
-                            }
-                          />
-                          <button
-                            className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
-                            onClick={() => handleUpdateStock(item.itemName)}
+
+
+
+
+              
+
+              <div>
+                <Card className="h-full w-full">
+
+                <CardHeader floated={false} shadow={false} className="rounded-none">
+                    <div className="w-full md:w-72">
+                      <Input
+                        label="Search"
+                        icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                    </div>
+                </CardHeader>
+
+                <CardBody className="overflow-scroll px-0">
+                  <table className="mt-4 w-full min-w-max table-auto text-left">
+                    <thead>
+                      <tr>
+                        {TABLE_HEAD.map((head, index) => (
+                          <th
+                            key={head}
+                            className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50"
                           >
-                            Update
-                          </button>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
-                          onClick={() => handleDeleteItem(item.itemName)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>
-          <h2 className="text-xl font-semibold mb-2">
-            Please verify that you are an official Locker admin
-          </h2>
-          <input
-            className="p-2 border border-gray-300 rounded"
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={handleVerifyClick}
-          >
-            Verify
-          </button>
-        </div>
-      )}
+                            <Typography
+                              variant="small"
+                              color="blue-gray"
+                              className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
+                            >
+                              {head}{" "}
+                
+                            </Typography>
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {filteredInventoryData.map(({ itemName, stockAmount }, index) => {
 
+                          const isLast = index === inventoryData.length - 1;
+                          const classes = isLast
+                            ? "p-4"
+                            : "p-4 border-b border-blue-gray-50";
+
+                          return (
+                            <tr key={itemName}>
+
+                              <td className={classes}>
+                                <div className="flex items-center gap-3">
+                                  <div className="flex flex-col">
+                                    <Typography
+                                      variant="small"
+                                      color="blue-gray"
+                                      className="font-normal"
+                                    >
+                                      {itemName}
+                                    </Typography>
+
+                                  </div>
+                                </div>
+                              </td>
+
+
+                              <td className={classes}>
+                                <div className="flex flex-col">
+                                  <Typography
+                                    variant="small"
+                                    color="blue-gray"
+                                    className="font-normal"
+                                  >
+                                    {stockAmount}
+                                  </Typography>
+
+                                </div>
+                              </td>
+
+
+                              <td className={classes}>
+                                <div className="w-max">
+                                <div className="flex items-center space-x-2">
+                              <input
+                                className="p-2 border border-gray-300 rounded"
+                                type="number"
+                                placeholder="New Stock"
+                                value={itemStocks[itemName] || ''}
+                                onChange={(e) =>
+                                  setItemStocks({
+                                    ...itemStocks,
+                                    [itemName]: e.target.value,
+                                  })
+                                }
+                              />
+                              <button
+                                className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
+                                onClick={() => handleUpdateStock(itemName)}
+                              >
+                                Update
+                              </button>
+                            </div>
+                                </div>
+                              </td>
+
+
+                              <td className={classes}>
+                                <Typography
+                                  variant="small"
+                                  color="blue-gray"
+                                  className="font-normal"
+                                >
+                                    <button
+                                      className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                                      onClick={() => handleDeleteItem(itemName)}
+                                    >
+                                      Delete
+                                    </button>
+                                </Typography>
+                              </td>
+
+
+                            </tr>
+                          );
+                        },
+                      )}
+                    </tbody>
+                  </table>
+                </CardBody>
+
+                </Card>
+              </div>
+
+
+
+
+
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-xl font-semibold my-3">
+                Please verify that you are an official Locker admin
+              </h2>
+              <input
+                className="p-2 border border-gray-300 rounded"
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                onClick={handleVerifyClick}
+              >
+                Verify
+              </button>
+            </div>
+          )}
+
+      </div>
+      
       <ToastContainer />
+
     </div>
   );
 }
