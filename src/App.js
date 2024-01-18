@@ -6,7 +6,7 @@ import Home from './Pages/Home';
 import Inventory from './Pages/Inventory'
 import Analytics from './Pages/Analytics'
 import QR from './Pages/QR';
-import Log from './Pages/Log';
+import Log from './Pages/Log_Setup/Log';
 import Updates from './Pages/Updates';
 
 function App() {
@@ -32,6 +32,15 @@ function App() {
           <Route path="/ghs/log" element={<Log school={"Georgetown"} short_school = {"ghs"}/>}/>
           <Route path="/ghs/updates" element={<Updates school={"Georgetown"} short_school = {"ghs"}/>}/>
           <Route path="/ghs/qr" element={<QR school={"Georgetown"} short_school = {"ghs"}/>}/>
+
+
+
+          <Route path="/test" element={<Home school={"Test"} short_school={"t"}/>}/>
+          <Route path="/test/inventory" element={<Inventory school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/test/analytics" element={<Analytics school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/test/log" element={<Log school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/test/updates" element={<Updates school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/test/qr" element={<QR school={"Test"} short_school = {"t"}/>}/>
 
 
         </Routes>

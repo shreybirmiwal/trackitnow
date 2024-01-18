@@ -37,6 +37,8 @@ function Inventory({school, short_school}) {
     linkTo = '/whs'
   } else if (school == "Georgetown"){
     linkTo = '/ghs'
+  }  else if (school == "Test"){
+    linkTo = '/t'
   }
 
 
@@ -45,6 +47,8 @@ function Inventory({school, short_school}) {
     correctPassword = process.env.REACT_APP_PASSWORD_WHS
   } else if(school === "Georgetown") {
     correctPassword = process.env.REACT_APP_PASSWORD_GHS
+  } else if(school === "Test"){
+    correctPassword = 't'
   } else {
     correctPassword = ""
   }
