@@ -4,8 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { collection, addDoc, setDoc, updateDoc, increment, doc, deleteDoc, getDocs } from "firebase/firestore";
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
+import { AdminNav } from '../Components/AdminNav';
 
-function Inventory({school}) {
+function Inventory({school, short_school}) {
   
 
   var linkTo = ''
@@ -287,16 +288,14 @@ function Inventory({school}) {
   };
 
   return (
-    <div className="container mx-auto p-4 h-screen">
+    <div>
+      <AdminNav school={school} short_school={short_school}/>
+      <div className="container mx-auto p-4 h-screen">
 
-            <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center justify-between mb-2">
 
       <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
-
-      <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
-            <p className="text-2xl">Student View</p>
-        </Link>
-        </div>
+      </div>
 
 
       {admin ? (
@@ -414,6 +413,8 @@ function Inventory({school}) {
       )}
 
       <ToastContainer />
+    </div>
+          
     </div>
   );
 }

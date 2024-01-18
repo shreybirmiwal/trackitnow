@@ -9,8 +9,9 @@ import { addDoc, setDoc, doc, deleteDoc } from "firebase/firestore";
 import { Link } from 'react-router-dom';
 import PieChart from '../Components/PieChart';
 import ColoredLine from '../Components/ColoredLine';
+import { AdminNav } from '../Components/AdminNav';
 
-function Analytics({school}) {
+function Analytics({school, short_school}) {
   const [inventoryData, setInventoryData] = useState([]);
   
   var linkTo = ''
@@ -81,6 +82,8 @@ function Analytics({school}) {
 
   return (
     <div className="container mx-auto p-4">
+          <AdminNav school={school} short_school={short_school}/>
+
       <div className="flex items-center justify-between mb-2">
         <h1 className="text-3xl font-semibold">Analytics</h1>
 
