@@ -19,7 +19,7 @@ function QR({school, short_school}) {
     <div>
         <AdminNav school={school} short_school={short_school}/>
 
-        <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 w-full">
+        <div className="flex flex-col justify-center items-center min-h-screen w-full">
         <div className="w-full max-w-xl p-4">
         <div className="flex flex-col items-center justify-center h-scree">
             <h1 className='mb-10 text-xl font-bold'> {school} Locker </h1>

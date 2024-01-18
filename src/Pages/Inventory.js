@@ -386,9 +386,7 @@ function Inventory({school, short_school}) {
                               className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                             >
                               {head}{" "}
-                              {index <= TABLE_HEAD.length - 3 && (
-                                <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
-                              )}
+                
                             </Typography>
                           </th>
                         ))}
@@ -495,7 +493,7 @@ function Inventory({school, short_school}) {
             </div>
           ) : (
             <div>
-              <h2 className="text-xl font-semibold mb-2">
+              <h2 className="text-xl font-semibold my-3">
                 Please verify that you are an official Locker admin
               </h2>
               <input

@@ -6,8 +6,17 @@ const Log = ({school, short_school}) => {
         <div>
             <AdminNav school={school} short_school={short_school}/>
 
-            This page is coming soon, stay tuned!
-            It will be track every transaction in a log format that you can sort and easily view
+            <div className='flex items-center justify-center mt-24'>
+                <div className='text-center'>
+                    <h2 className="text-xl font-semibold my-3">
+                        This page is coming soon, stay tuned!
+                    </h2>
+                    It will track every transaction in a log format that you can sort and easily view
+                </div>
+            </div>
+
+
+
         </div>
     );
 };

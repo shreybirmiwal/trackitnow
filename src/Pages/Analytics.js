@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import PieChart from '../Components/PieChart';
 import ColoredLine from '../Components/ColoredLine';
 import { AdminNav } from '../Components/AdminNav';
+import { AnalyticsTable } from '../Components/AnalyticsTable';
 
 function Analytics({school, short_school}) {
   const [inventoryData, setInventoryData] = useState([]);
@@ -81,77 +82,66 @@ function Analytics({school, short_school}) {
 
 
   return (
-    <div className="container mx-auto p-4">
-          <AdminNav school={school} short_school={short_school}/>
+    <div className='min-h-screen'>
+      <AdminNav school={school} short_school={short_school}/>
 
-      <div className="flex items-center justify-between mb-2">
-        <h1 className="text-3xl font-semibold">Analytics</h1>
+      <div class="container mx-auto p-7">
 
+        <h1 className="text-3xl font-semibold mt-3">Inventory Management</h1>
 
+        <div className='my-5'>
+          <Line data={chartData}  />
+        </div>
 
-          <Link to={linkTo} className="flex items-center rounded-sm justify-center p-2 space-x-3 rounded-md hover:font-bold" style={{ backgroundColor: '#ff6961' }}>
-            <p className="text-2xl">Student View</p>
-          </Link>
-        
-      </div>
-      
-      <div className="h-max mb-5">
-
-        <Line data={chartData}  />
-      </div>
-
-      <ColoredLine color={"black"}/>
-
-      {/* Table with four columns */}
-      <div className="max-h-80  mt-5">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead>
-            <tr>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Item Name
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Current Stock
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Average Checkouts/Day
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Expected Days Until Depletion
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {inventoryData.map((item) => (
-              <tr key={item.itemName} className=''>
-              <td className="px-6 py-4 whitespace-nowrap" > {item.itemName}</td>
-              <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.stockAmount == 0 ? '#ff6961' : 'inherit' }}>{item.stockAmount}</td>
-              <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
-              <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}> {item.expectedDaysUntilDepletion.toFixed(2)}</td>
-            </tr>
-            ))}
-          </tbody>
-        </table>
+        <ColoredLine color={"black"}/>
 
 
-              <div className='mt-5'>
-                <ColoredLine  color={"black"}/>
+        <AnalyticsTable inventoryData={inventoryData}/>
 
-              </div>
+        {/* Table with four columns */}
+        <div className=" mt-5 overflow-scroll">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Item Name
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Current Stock
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Average Checkouts/Day
+                </th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Expected Days Until Depletion
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {inventoryData.map((item) => (
+                <tr key={item.itemName} className=''>
+                <td className="px-6 py-4 whitespace-nowrap" > {item.itemName}</td>
+                <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.stockAmount == 0 ? '#ff6961' : 'inherit' }}>{item.stockAmount}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}> {item.expectedDaysUntilDepletion.toFixed(2)}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
 
-      </div>
+        <div className='mt-5'>
+          <ColoredLine  color={"black"}/>
+        </div>
 
 
 
-      <div>
+        <PieChart/>
 
-            <PieChart/>
 
       </div>
-
       <ToastContainer />
-
 
     </div>
   );
