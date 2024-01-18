@@ -288,133 +288,130 @@ function Inventory({school, short_school}) {
   };
 
   return (
-    <div>
-      <AdminNav school={school} short_school={short_school}/>
-      <div className="container mx-auto p-4 h-screen">
+      <div>
+        <AdminNav school={school} short_school={short_school}/>
 
-      <div className="flex items-center justify-between mb-2">
-
-      <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
-      </div>
-
-
-      {admin ? (
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold mb-2 mt-10">Add item to database</h2>
-
-          <div className="flex items-center space-x-2">
-            <input
-              className="p-2 border border-gray-300 rounded"
-              type="text"
-              placeholder="Item Name"
-              value={newItemName}
-              onChange={(e) => setNewItemName(e.target.value)}
-            />
-            <input
-              className="p-2 border border-gray-300 rounded"
-              type="number"
-              placeholder="Current Stock"
-              value={newStock}
-              onChange={(e) => setNewStock(e.target.value)}
-            />
-            <button
-              className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
-              onClick={handleAddNewItem}
-            >
-              Add Item
-            </button>
-          </div>
-
-          <div className="mb-4 mt-10">
-            <h2 className="text-xl font-semibold mb-2">All Items</h2>
-            <div className="overflow-y-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Item Name
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Stock
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Update Stock
-                    </th>
-                    <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Delete Item
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className='overflow-y-scroll h-12'>
-                  {inventoryData.map((item) => (
-                    <tr key={item.itemName}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.itemName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {item.stockAmount}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center space-x-2">
-                          <input
-                            className="p-2 border border-gray-300 rounded"
-                            type="number"
-                            placeholder="New Stock"
-                            value={itemStocks[item.itemName] || ''}
-                            onChange={(e) =>
-                              setItemStocks({
-                                ...itemStocks,
-                                [item.itemName]: e.target.value,
-                              })
-                            }
-                          />
-                          <button
-                            className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
-                            onClick={() => handleUpdateStock(item.itemName)}
-                          >
-                            Update
-                          </button>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
-                          onClick={() => handleDeleteItem(item.itemName)}
-                        >
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      ) : (
         <div>
-          <h2 className="text-xl font-semibold mb-2">
-            Please verify that you are an official Locker admin
-          </h2>
-          <input
-            className="p-2 border border-gray-300 rounded"
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-            onClick={handleVerifyClick}
-          >
-            Verify
-          </button>
-        </div>
-      )}
 
+          <h1 className="text-3xl font-semibold mb-2">Inventory Management</h1>
+          {admin ? (
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold mb-2 mt-10">Add item to database</h2>
+
+              <div className="flex items-center space-x-2">
+                <input
+                  className="p-2 border border-gray-300 rounded"
+                  type="text"
+                  placeholder="Item Name"
+                  value={newItemName}
+                  onChange={(e) => setNewItemName(e.target.value)}
+                />
+                <input
+                  className="p-2 border border-gray-300 rounded"
+                  type="number"
+                  placeholder="Current Stock"
+                  value={newStock}
+                  onChange={(e) => setNewStock(e.target.value)}
+                />
+                <button
+                  className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                  onClick={handleAddNewItem}
+                >
+                  Add Item
+                </button>
+              </div>
+
+              <div className="mb-4 mt-10">
+                <h2 className="text-xl font-semibold mb-2">All Items</h2>
+                <div className="overflow-y-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <thead>
+                      <tr>
+                        <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Item Name
+                        </th>
+                        <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Stock
+                        </th>
+                        <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Update Stock
+                        </th>
+                        <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Delete Item
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className='overflow-y-scroll h-12'>
+                      {inventoryData.map((item) => (
+                        <tr key={item.itemName}>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {item.itemName}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            {item.stockAmount}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center space-x-2">
+                              <input
+                                className="p-2 border border-gray-300 rounded"
+                                type="number"
+                                placeholder="New Stock"
+                                value={itemStocks[item.itemName] || ''}
+                                onChange={(e) =>
+                                  setItemStocks({
+                                    ...itemStocks,
+                                    [item.itemName]: e.target.value,
+                                  })
+                                }
+                              />
+                              <button
+                                className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
+                                onClick={() => handleUpdateStock(item.itemName)}
+                              >
+                                Update
+                              </button>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <button
+                              className="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+                              onClick={() => handleDeleteItem(item.itemName)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2 className="text-xl font-semibold mb-2">
+                Please verify that you are an official Locker admin
+              </h2>
+              <input
+                className="p-2 border border-gray-300 rounded"
+                type="password"
+                placeholder="Enter password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                onClick={handleVerifyClick}
+              >
+                Verify
+              </button>
+            </div>
+          )}
+
+      </div>
+      
       <ToastContainer />
-    </div>
-          
+
     </div>
   );
 }
