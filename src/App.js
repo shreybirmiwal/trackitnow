@@ -16,7 +16,7 @@ function App() {
         <Router>
         <Routes>
           
-          <Route exact path="/" element={<LandingPage school={"Georgetown"} short_school={"ghs"}/>}/>
+          <Route exact path="/" element={<LandingPage />}/>
 
           <Route path="/whs" element={<Home school={"Westwood"} short_school={"whs"}/>}/>
           <Route path="/whs/inventory" element={<Inventory school={"Westwood"} short_school = {"whs"}/>}/>

@@ -4,13 +4,18 @@ import { db } from '../firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addDoc, setDoc, deleteDoc } from "firebase/firestore";
-
-
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { Input } from '@material-tailwind/react';
 function Home({school}) {
 
   const [inventoryData, setInventoryData] = useState([]);
   const [checkoutQuantities, setCheckoutQuantities] = useState({});
   const [studentGrade, setStudentGrade] = useState('');
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredInventoryData = inventoryData.filter(({ itemName }) =>
+  itemName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
 
   useEffect(() => {
@@ -118,13 +123,24 @@ function Home({school}) {
   };
 
   return (
-    <div>
-      <div className="flex flex-col justify-center items-center min-h-screen bg-gray-100 w-full">
-        <div className="w-full max-w-xl p-4">
-          <h1 className="text-2xl font-bold mb-4">{school} Locker</h1>
-          <p className="text-gray-600 mb-4">Select and update the quantities you have checked out from the Locker so we can keep track of our stockpile.</p>
-          <div className="overflow-x-auto">
-            <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+    <div className='min-h-screen'>
+      <div className="container mx-auto p-7">
+
+        <h1 className="text-3xl font-semibold mt-3">{school} Locker</h1>
+  
+
+          <p className="text-gray-600 mb-4 mt-4">Select and update the quantities you have checked out from the Locker so we can keep track of our stockpile.</p>
+          <Input
+            label="Search"
+            icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+
+          <div className="overflow-x-auto pt-5">
+            <div style={{ maxHeight: '500px', overflowY: 'auto' }}>
+
+
               <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                   <tr>
@@ -137,7 +153,7 @@ function Home({school}) {
                   </tr>
                 </thead>
                 <tbody>
-                  {inventoryData.map((item, index) => (
+                  {filteredInventoryData.map((item, index) => (
                     <tr key={index}>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {item.itemName}
@@ -178,7 +194,6 @@ function Home({school}) {
           </div>
         </div>
 
-      </div>
     <ToastContainer />
 
     </div>

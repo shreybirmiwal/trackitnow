@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import PieChart from '../Components/PieChart';
 import ColoredLine from '../Components/ColoredLine';
 import { AdminNav } from '../Components/AdminNav';
-
 function Analytics({school, short_school}) {
   const [inventoryData, setInventoryData] = useState([]);
   
