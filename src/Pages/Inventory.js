@@ -5,7 +5,6 @@ import { collection, addDoc, setDoc, updateDoc, increment, doc, deleteDoc, getDo
 import { db } from '../firebase';
 import { Link } from 'react-router-dom';
 import { AdminNav } from '../Components/AdminNav';
-import { InventoryTable } from '../Components/InventoryTable';
 import {
   MagnifyingGlassIcon,
   ChevronUpDownIcon,
@@ -58,6 +57,10 @@ function Inventory({school, short_school}) {
   const [inventoryData, setInventoryData] = useState([]);
   const [itemStocks, setItemStocks] = useState({});
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredInventoryData = inventoryData.filter(({ itemName }) =>
+    itemName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handlePasswordChange = (event) => { //not password change, like the password field getting updated
     setPassword(event.target.value);
@@ -362,6 +365,8 @@ function Inventory({school, short_school}) {
                       <Input
                         label="Search"
                         icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
                       />
                     </div>
                 </CardHeader>
@@ -381,7 +386,7 @@ function Inventory({school, short_school}) {
                               className="flex items-center justify-between gap-2 font-normal leading-none opacity-70"
                             >
                               {head}{" "}
-                              {index !== TABLE_HEAD.length - 1 && (
+                              {index <= TABLE_HEAD.length - 3 && (
                                 <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
                               )}
                             </Typography>
@@ -390,8 +395,8 @@ function Inventory({school, short_school}) {
                       </tr>
                     </thead>
                     <tbody>
-                      {inventoryData.map(
-                        ({ itemName, stockAmount }, index) => {
+                    {filteredInventoryData.map(({ itemName, stockAmount }, index) => {
+
                           const isLast = index === inventoryData.length - 1;
                           const classes = isLast
                             ? "p-4"
@@ -432,7 +437,26 @@ function Inventory({school, short_school}) {
 
                               <td className={classes}>
                                 <div className="w-max">
-                                test
+                                <div className="flex items-center space-x-2">
+                              <input
+                                className="p-2 border border-gray-300 rounded"
+                                type="number"
+                                placeholder="New Stock"
+                                value={itemStocks[itemName] || ''}
+                                onChange={(e) =>
+                                  setItemStocks({
+                                    ...itemStocks,
+                                    [itemName]: e.target.value,
+                                  })
+                                }
+                              />
+                              <button
+                                className="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
+                                onClick={() => handleUpdateStock(itemName)}
+                              >
+                                Update
+                              </button>
+                            </div>
                                 </div>
                               </td>
 
