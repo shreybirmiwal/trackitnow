@@ -3,6 +3,7 @@ import { AdminNav } from '../../Components/AdminNav';
 import { db } from '../../firebase';
 import { collection, getDoc, query, getDocs } from 'firebase/firestore';
 import { useState, useEffect } from 'react';
+import CheckoutCard from './CheckoutCard';
 
 const Log = ({school, short_school}) => {
 
@@ -37,6 +38,14 @@ const Log = ({school, short_school}) => {
             <div class="container mx-auto p-7">
                 <h1 className="text-3xl font-semibold mt-3">Action Log</h1>
             </div>
+
+            {data.map((item) => (
+              item.checkout ? (
+                <CheckoutCard key={item.id} Grade={item.Grade} Items={item.Items} Time={item.Time} />
+              ) : (
+                <AdminCard key={item.id} /* Pass AdminCard props here */ />
+              )
+            ))}
 
         </div>
     );

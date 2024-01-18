@@ -35,12 +35,12 @@ function App() {
 
 
 
-          <Route path="/test" element={<Home school={"Test"} short_school={"t"}/>}/>
-          <Route path="/test/inventory" element={<Inventory school={"Test"} short_school = {"t"}/>}/>
-          <Route path="/test/analytics" element={<Analytics school={"Test"} short_school = {"t"}/>}/>
-          <Route path="/test/log" element={<Log school={"Test"} short_school = {"t"}/>}/>
-          <Route path="/test/updates" element={<Updates school={"Test"} short_school = {"t"}/>}/>
-          <Route path="/test/qr" element={<QR school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/t" element={<Home school={"Test"} short_school={"t"}/>}/>
+          <Route path="/t/inventory" element={<Inventory school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/t/analytics" element={<Analytics school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/t/log" element={<Log school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/t/updates" element={<Updates school={"Test"} short_school = {"t"}/>}/>
+          <Route path="/t/qr" element={<QR school={"Test"} short_school = {"t"}/>}/>
 
 
         </Routes>
