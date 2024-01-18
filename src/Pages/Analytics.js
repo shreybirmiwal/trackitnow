@@ -49,7 +49,7 @@ function Analytics({school, short_school}) {
         
       inventoryArray.sort((a, b) => a.expectedDaysUntilDepletion - b.expectedDaysUntilDepletion);
       setInventoryData(inventoryArray);
-
+      
 
       } catch (error) {
         console.error('Error fetching inventory data: ', error);
@@ -116,10 +116,14 @@ function Analytics({school, short_school}) {
             <tbody>
               {inventoryData.map((item) => (
                 <tr key={item.itemName} className=''>
-                <td className="px-6 py-4 whitespace-nowrap" > {item.itemName}</td>
-                <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.stockAmount == 0 ? '#ff6961' : 'inherit' }}>{item.stockAmount}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{item.itemName}</td>
+                <td className="px-6 py-4 whitespace-nowrap" style={{ backgroundColor: item.stockAmount === 0 ? '#ff6961' : 'inherit' }}>
+                  {item.stockAmount === 0 ? 'OUT OF STOCK' : item.stockAmount}
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">{item.checkouts_per_day.toFixed(2)}</td>
-                <td className="px-6 py-4 whitespace-nowrap"  style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}> {item.expectedDaysUntilDepletion.toFixed(2)}</td>
+                <td className="px-6 py-4 whitespace-nowrap" style={{ backgroundColor: item.expectedDaysUntilDepletion < 10 ? '#ff6961' : 'inherit' }}>
+                  {isFinite(item.expectedDaysUntilDepletion) ? item.expectedDaysUntilDepletion.toFixed(2) : 'NA'}
+                </td>
               </tr>
               ))}
             </tbody>
