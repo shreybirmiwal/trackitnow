@@ -70,6 +70,8 @@ function Inventory({school, short_school}) {
     setPassword(event.target.value);
   };
 
+
+
   const fetchData2 = async () => {
     try {
       var school_tag = school +"-inventory"
@@ -85,7 +87,7 @@ function Inventory({school, short_school}) {
 
       const data_doc = doc(db, 'data', 'data1');
       await updateDoc(data_doc, {
-        data_pulls: increment(inventoryArray.length())
+        data_pulls: increment(inventoryArray.length)
       });
 
     } catch (error) {
@@ -184,10 +186,29 @@ function Inventory({school, short_school}) {
           theme: "dark",
         });
 
+        //UPDATE THE LOGS
+        var school_string = school + "-Log";
+        const coll = collection(db, school_string);
+        const log_doc = await addDoc(coll, {});
+        const docId = log_doc.id;
+        const updateData = {
+          Checkout: false,
+          Type: "Add New Item",
+          Item: newItemName,
+          Stock: newStock,
+          Time: new Date()
+        };
+  
+        await updateDoc(doc(coll, docId), updateData);
+        console.log("Document updated successfully");
+
+
+
         setNewItemName('');
         setNewStock('');
         
         fetchData2();
+
 
         
       } catch (error) {
@@ -236,6 +257,23 @@ function Inventory({school, short_school}) {
           theme: "dark",
         });
 
+
+        //UPDATE THE LOGS
+        var school_string = school + "-Log";
+        const coll = collection(db, school_string);
+        const log_doc = await addDoc(coll, {});
+        const docId = log_doc.id;
+        const updateData = {
+          Checkout: false,
+          Type: "Update Stock",
+          Item: itemName,
+          Stock: stockToUpdate,
+          Time: new Date()
+
+        };
+  
+        await updateDoc(doc(coll, docId), updateData);
+        console.log("Document updated successfully");
 
 
         setSelectedItem('');
@@ -292,6 +330,23 @@ function Inventory({school, short_school}) {
         theme: "dark",
       });
 
+
+      //UPDATE THE LOGS
+      var school_string = school + "-Log";
+      const coll = collection(db, school_string);
+      const log_doc = await addDoc(coll, {});
+      const docId = log_doc.id;
+      const updateData = {
+        Checkout: false,
+        Type: "Delete Item",
+        Item: itemName,
+        Stock: 0,
+        Time: new Date()
+      };
+      await updateDoc(doc(coll, docId), updateData);
+      console.log("Document updated successfully");
+
+
       setSelectedItem('');
       setItemStocks({ ...itemStocks, [itemName]: '' });
       
@@ -317,6 +372,9 @@ function Inventory({school, short_school}) {
       });
     }
   };
+
+
+  
 
   return (
       <div className='min-h-screen'>
