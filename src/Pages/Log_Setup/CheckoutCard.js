@@ -5,11 +5,19 @@ function CheckoutCard({ Grade, Items, Time }) {
   const timestampDate = Time ? Time.toDate() : null;
   // Format the date using toLocaleString
   const formattedDate = timestampDate
-    ? timestampDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true })
-    : '';
+  ? timestampDate.toLocaleString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    })
+  : '';
 
   return (
-    <div className="grid grid-cols-6 gap-4 bg-blue-400 p-4 mt-4 rounded-md shadow-md">
+    <div className="grid grid-cols-5 gap-4 bg-blue-400 p-4 mt-4 rounded-md shadow-md">
 
       <div className="col-span-1 flex items-start justify-start ml-5">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -17,11 +25,11 @@ function CheckoutCard({ Grade, Items, Time }) {
         </svg>
       </div>
 
-      <div className="col-span-2 text-white text-sm">
+      <div className="col-span-1 text-white text-sm">
         {formattedDate}
       </div>
 
-      <div className="col-span-2 overflow-x-auto">
+      <div className="col-span-1 overflow-x-auto">
         {Object.entries(Items).map(([item, amount]) => (
           <p key={item} className="text-white">{`${item}: ${amount}`}</p>
         ))}
@@ -29,6 +37,9 @@ function CheckoutCard({ Grade, Items, Time }) {
 
       <div className="col-span-1 text-white">
         <p className="font-semibold">Grade: {Grade}</p>
+      </div>
+
+      <div className="col-span-1 text-white">
       </div>
     </div>
   );
