@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs, doc, updateDoc, increment } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, increment  } from "firebase/firestore";
 import { db } from '../firebase';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -57,6 +57,29 @@ function Home({school}) {
     setStudentGrade(grade);
   };
 
+  const updateLog = async () => {
+    try {
+      var school_string = school + "-Log";
+      const coll = collection(db, school_string);
+  
+      const docRef = await addDoc(coll, {});
+      const docId = docRef.id;
+  
+      const updateData = {
+        Checkout: true,
+        Grade: Number(studentGrade),
+        Time: new Date(),
+        Items: checkoutQuantities,
+      };
+  
+      await updateDoc(doc(coll, docId), updateData);
+  
+      console.log("Document updated successfully");
+    } catch (error) {
+      console.error("Error updating document:", error);
+    }
+  };
+  
   const handleSubmit = async () => {
     // Check if grade entered
     if (studentGrade !== '') {
@@ -90,6 +113,9 @@ function Home({school}) {
             [studentGrade]: increment(quantityToCheckout),
             total: increment(quantityToCheckout)
           });
+
+
+          updateLog();
         }
       }
 
