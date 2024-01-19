@@ -36,6 +36,10 @@ function CheckoutCard({ Grade, Items, Time }) {
       </div>
 
       <div className="col-span-1 text-white">
+        <p className="font-semibold">Checkout</p>
+      </div>
+
+      <div className="col-span-1 text-white">
         <p className="font-semibold">Grade: {Grade}</p>
       </div>
 
