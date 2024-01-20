@@ -11,7 +11,7 @@ function Home({school}) {
   const [inventoryData, setInventoryData] = useState([]);
   const [checkoutQuantities, setCheckoutQuantities] = useState({});
   const [studentGrade, setStudentGrade] = useState('');
-
+  var isSubmiting = false;
   const [searchQuery, setSearchQuery] = useState('');
   const filteredInventoryData = inventoryData.filter(({ itemName }) =>
   itemName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -81,6 +81,9 @@ function Home({school}) {
   };
   
   const handleSubmit = async () => {
+    if(isSubmiting == true) return;
+    
+    isSubmiting = true;
     // Check if grade entered
     if (studentGrade !== '') {
       console.log("Checkout quantities:", checkoutQuantities);
@@ -115,9 +118,11 @@ function Home({school}) {
           });
 
 
-          updateLog();
         }
       }
+
+      updateLog();
+
 
       toast.success('Success!', {
         position: "top-right",
@@ -146,6 +151,8 @@ function Home({school}) {
         theme: "dark",
       });
     }
+
+    isSubmiting = false
   };
 
   return (
