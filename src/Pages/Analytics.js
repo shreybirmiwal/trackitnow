@@ -18,6 +18,8 @@ function Analytics({school, short_school}) {
     linkTo = '/whs'
   } else if (school == "Georgetown"){
     linkTo = '/ghs'
+  } else if(school == "Test"){
+    linkTo = '/t'
   }
 
   useEffect(() => {
