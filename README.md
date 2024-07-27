@@ -9,7 +9,8 @@ Currently tracks $15k of supplies such as backpacks, water bottles, and more!
 ## Demo
 
 In the video, you can first see how a user can easily checkout items from the database. Then, you can see from an admin perspective the updates to the analytics and how to add/delete items.
-![video](https://github.com/user-attachments/assets/f174796f-1021-4376-9157-4661fcef4b29)
+https://github.com/user-attachments/assets/7561ea98-a975-4f4e-87aa-bb55412c58bc
+
 
 
 
